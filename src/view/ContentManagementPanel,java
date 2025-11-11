@@ -1,0 +1,134 @@
+package view;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.List;
+
+public class ContentManagementPanel extends JPanel {
+    private final ContentController contentController;
+    private final SearchController searchController;
+    private final NavigationController navigationController;
+    private final MainFrame mainFrame;
+    private JTable contentsTable;
+    private DefaultTableModel tableModel;
+
+    public ContentManagementPanel(ContentController contentController,
+                                 SearchController searchController,
+                                 NavigationController navigationController,
+                                 MainFrame mainFrame) {
+        this.contentController = contentController;
+        this.searchController = searchController;
+        this.navigationController = navigationController;
+        this.mainFrame = mainFrame;
+        initializeUI();
+    }
+
+    private void initializeUI() {
+        setLayout(new BorderLayout(10, 10));
+        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        setBackground(new Color(245, 245, 245));
+
+        JPanel toolbarPanel = createToolbar();
+        add(toolbarPanel, BorderLayout.NORTH);
+
+        JPanel tablePanel = createTablePanel();
+        add(tablePanel, BorderLayout.CENTER);
+    }
+
+    private JPanel createToolbar() {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color(245, 245, 245));
+
+        JButton nuevoButton = new JButton("+ Nuevo Contenido");
+        nuevoButton.addActionListener(e -> mainFrame.showContentForm());
+
+        JButton editarButton = new JButton("✎ Editar");
+        editarButton.addActionListener(e -> editarContenido());
+
+        JButton eliminarButton = new JButton("🗑 Eliminar");
+        eliminarButton.addActionListener(e -> eliminarContenido());
+
+        JButton publicarButton = new JButton("📤 Publicar");
+        publicarButton.addActionListener(e -> publicarContenido());
+
+        panel.add(nuevoButton);
+        panel.add(editarButton);
+        panel.add(eliminarButton);
+        panel.add(publicarButton);
+
+        return panel;
+    }
+
+    private JPanel createTablePanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        
+        String[] columns = {"ID", "Tipo", "Título", "Autor", "Estado", "Creado"};
+        tableModel = new DefaultTableModel(columns, 0);
+        contentsTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(contentsTable);
+        
+        panel.add(scrollPane, BorderLayout.CENTER);
+        return panel;
+    }
+
+    private void editarContenido() {
+        int selectedRow = contentsTable.getSelectedRow();
+        if (selectedRow != -1) {
+            JOptionPane.showMessageDialog(this, "Funcionalidad de edición en desarrollo", "Editar", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un contenido para editar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void eliminarContenido() {
+        int selectedRow = contentsTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un contenido para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        User currentUser = navigationController.getCurrentUser();
+        if (!currentUser.hasPermission("delete_any")) {
+            JOptionPane.showMessageDialog(this, "No tiene permisos para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este contenido?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            String contentId = (String) tableModel.getValueAt(selectedRow, 0);
+            contentController.deleteContent(contentId);
+            Logger.success("Contenido " + contentId + " eliminado");
+            refresh();
+        }
+    }
+
+    private void publicarContenido() {
+        int selectedRow = contentsTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un contenido para publicar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String contentId = (String) tableModel.getValueAt(selectedRow, 0);
+        contentController.publishContent(contentId);
+        Logger.success("Contenido " + contentId + " publicado");
+        refresh();
+    }
+
+    public void refresh() {
+        List<Content> contents = contentController.getAllContents();
+        tableModel.setRowCount(0);
+
+        for (Content c : contents) {
+            String type = c instanceof Article ? "Artículo" : (c instanceof Video ? "Video" : "Imagen");
+            tableModel.addRow(new Object[]{
+                    c.getId(),
+                    type,
+                    c.getTitle(),
+                    c.getAuthor().getUsername(),
+                    c.getState().getDisplayName(),
+                    c.getCreatedAt()
+            });
+        }
+    }
+}

@@ -1,0 +1,70 @@
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# IDE Specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# IDE - IntelliJ
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Eclipse
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# IDE - NetBeans
+nbproject/
+build/
+dist/
+nbbuild/
+.nb-gradle/
+
+# IDE - Visual Studio Code
+.vscode/
+.history/
+
+# Compiled output
+bin/
+build/
+target/
+dist/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Dependencies
+lib/
