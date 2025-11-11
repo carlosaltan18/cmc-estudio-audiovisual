@@ -12,4 +12,4 @@
 .class
 # IntelliJ
 .idea/
-cmc-estudio-audiovisual.iml
+*.iml
