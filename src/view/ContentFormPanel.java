@@ -2,7 +2,18 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import util.*;
+import model.*;
+import controller.*;
 
+/**
+ * Panel para la creación y edición de contenido en el CMS.
+ * Proporciona una interfaz para crear artículos, videos e imágenes
+ * con campos específicos para cada tipo de contenido.
+ * 
+ * @author Carlos
+ * @version 1.0
+ */
 public class ContentFormPanel extends JPanel {
     private final ContentController contentController;
     private final CategoryController categoryController;
@@ -14,6 +25,14 @@ public class ContentFormPanel extends JPanel {
     private JPanel dynamicPanel;
     private CardLayout dynamicLayout;
 
+    /**
+     * Construye un ContentFormPanel con los controladores necesarios.
+     * 
+     * @param contentController Controlador de contenidos
+     * @param categoryController Controlador de categorías
+     * @param navigationController Controlador de navegación
+     * @param mainFrame Frame principal de la aplicación
+     */
     public ContentFormPanel(ContentController contentController,
                            CategoryController categoryController,
                            NavigationController navigationController,
@@ -25,6 +44,11 @@ public class ContentFormPanel extends JPanel {
         initializeUI();
     }
 
+    /**
+     * Inicializa la interfaz gráfica del panel de formulario.
+     * Crea los campos de entrada para título, descripción y tipo de contenido,
+     * así como paneles dinámicos específicos para cada tipo de contenido.
+     */
     private void initializeUI() {
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -95,6 +119,12 @@ public class ContentFormPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Crea el panel específico para artículos.
+     * Contiene un campo de texto para el contenido del artículo.
+     * 
+     * @return JPanel configurado para edición de artículos
+     */
     private JPanel createArticlePanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -113,6 +143,12 @@ public class ContentFormPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Crea el panel específico para videos.
+     * Contiene campos para URL, duración y resolución del video.
+     * 
+     * @return JPanel configurado para edición de videos
+     */
     private JPanel createVideoPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -151,6 +187,12 @@ public class ContentFormPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Crea el panel específico para imágenes.
+     * Contiene campos para URL, ancho y alto de la imagen.
+     * 
+     * @return JPanel configurado para edición de imágenes
+     */
     private JPanel createImagePanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -189,6 +231,10 @@ public class ContentFormPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Actualiza los campos dinámicos según el tipo de contenido seleccionado.
+     * Cambia entre los paneles de artículo, video e imagen.
+     */
     private void updateDynamicFields() {
         String selected = (String) typeCombo.getSelectedItem();
         switch (selected) {
@@ -198,6 +244,13 @@ public class ContentFormPanel extends JPanel {
         }
     }
 
+    /**
+     * Guarda el contenido creado en el sistema.
+     * Valida los campos, obtiene el autor actual y crea el contenido
+     * según el tipo seleccionado (artículo, video o imagen).
+     * 
+     * @throws NumberFormatException si los valores numéricos no son válidos
+     */
     private void saveContent() {
         String title = titleField.getText();
         String description = descriptionArea.getText();
@@ -241,6 +294,13 @@ public class ContentFormPanel extends JPanel {
         }
     }
 
+    /**
+     * Obtiene el valor de un campo específico del panel dinámico.
+     * Busca el componente por nombre en el panel dinámico y retorna su valor.
+     * 
+     * @param fieldName Nombre del campo a buscar
+     * @return Valor del campo encontrado, o cadena vacía si no existe
+     */
     private String getFieldValue(String fieldName) {
         for (Component comp : dynamicPanel.getComponents()) {
             if (comp instanceof JPanel) {
@@ -263,6 +323,10 @@ public class ContentFormPanel extends JPanel {
         return "";
     }
 
+    /**
+     * Reinicia todos los campos del formulario a sus valores por defecto.
+     * Limpia los campos de título y descripción, y restablece el tipo de contenido.
+     */
     public void reset() {
         titleField.setText("");
         descriptionArea.setText("");

@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import util.*;
+import controller.*;
+import model.Report;
 
 public class ReportPanel extends JPanel {
     private final ReportController reportController;
@@ -39,7 +41,7 @@ public class ReportPanel extends JPanel {
         JButton generalButton = new JButton("Reporte General");
         JButton typeButton = new JButton("Por Tipo");
         JButton authorButton = new JButton("Por Autor");
-        JButton statsButton = new JButton("Estadísticas");
+        JButton statsButton = new JButton("EstadÃ­sticas");
 
         generalButton.addActionListener(e -> displayReport(reportController.generateGeneralReport()));
         typeButton.addActionListener(e -> displayReport(reportController.generateReportByType()));
@@ -68,10 +70,10 @@ public class ReportPanel extends JPanel {
 
     private void displayReport(Report report) {
         StringBuilder sb = new StringBuilder();
-        sb.append("═══════════════════════════════════════════════════════\n");
+        sb.append("â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n");
         sb.append("REPORTE: ").append(report.getType()).append("\n");
         sb.append("Generado: ").append(report.getGeneratedAt()).append("\n");
-        sb.append("═══════════════════════════════════════════════════════\n\n");
+        sb.append("â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n\n");
 
         Map<String, Object> data = report.getData();
         for (Map.Entry<String, Object> entry : data.entrySet()) {
@@ -79,14 +81,14 @@ public class ReportPanel extends JPanel {
             if (entry.getValue() instanceof java.util.List) {
                 sb.append("\n");
                 for (Object item : (java.util.List<?>) entry.getValue()) {
-                    sb.append("  • ").append(item).append("\n");
+                    sb.append("  â€¢ ").append(item).append("\n");
                 }
             } else {
                 sb.append(entry.getValue()).append("\n");
             }
         }
 
-        sb.append("\n═══════════════════════════════════════════════════════\n");
+        sb.append("\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n");
         reportArea.setText(sb.toString());
         Logger.success("Reporte generado: " + report.getType());
     }

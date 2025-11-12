@@ -5,53 +5,24 @@ package model.enums;
  * Cada tipo tiene características específicas.
  */
 public enum ContentType {
-    /**
-     * Artículo: Contenido textual
-     * Incluye título, descripción y contenido extenso
-     */
-    ARTICLE,
+    ARTICLE("Artículo", "📄"),
+    VIDEO("Video", "🎥"),
+    IMAGE("Imagen", "🖼️");
 
-    /**
-     * Video: Contenido multimedia de video
-     * Incluye URL, duración y resolución
-     */
-    VIDEO,
+    private final String displayName;
+    private final String icon;
 
-    /**
-     * Imagen: Contenido visual estático
-     * Incluye URL, dimensiones y tamaño de archivo
-     */
-    IMAGE;
+    ContentType(String displayName, String icon) {
+        this.displayName = displayName;
+        this.icon = icon;
+    }
 
-    /**
-     * Obtiene el nombre legible del tipo de contenido
-     * @return Nombre del tipo en español
-     */
     public String getDisplayName() {
-        return switch (this) {
-            case ARTICLE -> "Artículo";
-            case VIDEO -> "Video";
-            case IMAGE -> "Imagen";
-        };
+        return displayName;
     }
 
-    /**
-     * Obtiene el icono o símbolo representativo del tipo
-     * @return Símbolo emoji o carácter representativo
-     */
     public String getIcon() {
-        return switch (this) {
-            case ARTICLE -> "📄";
-            case VIDEO -> "🎥";
-            case IMAGE -> "🖼️";
-        };
-    }
-
-    /**
-     * Verifica si el tipo es multimedia (video o imagen)
-     * @return true si el tipo es VIDEO o IMAGE
-     */
-    public boolean isMultimedia() {
-        return this == VIDEO || this == IMAGE;
+        return icon;
     }
 }
+

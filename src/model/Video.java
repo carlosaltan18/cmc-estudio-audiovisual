@@ -43,7 +43,7 @@ public class Video extends Content {
 
     @Override
     public String toString() {
-        return String.format("[VIDEO] %s | Duración: %d min | Resolución: %s | %s",
+        return String.format("[VIDEO] %s | DuraciÃ³n: %d min | ResoluciÃ³n: %s | %s",
                 title, duration, resolution, state.getDisplayName());
     }
 }

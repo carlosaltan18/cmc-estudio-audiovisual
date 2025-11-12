@@ -32,6 +32,6 @@ public class Article extends Content {
 
     @Override
     public String toString() {
-        return String.format("[ARTÍCULO] %s | Palabras: %d | %s", title, wordCount, state.getDisplayName());
+        return String.format("[ARTÃCULO] %s | Palabras: %d | %s", title, wordCount, state.getDisplayName());
     }
 }

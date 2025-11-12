@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Compiled class files
 *.class
 
@@ -69,20 +68,3 @@ htmlcov/
 
 # Dependencies
 lib/
-=======
-# Default ignored files
-/shelf/
-/.idea/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Environment-dependent path to Maven home directory
-/mavenHomeManager.xml
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-# Java
-.class
-# IntelliJ
-.idea/
-*.iml
->>>>>>> 712757a5eb3c57e64775e7d2b82f051b5f5f0133

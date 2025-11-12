@@ -45,7 +45,7 @@ public class Image extends Content{
 
     @Override
     public String toString() {
-        return String.format("[IMAGEN] %s | Resolución: %dx%d | Tamaño: %.2f MB | %s",
+        return String.format("[IMAGEN] %s | ResoluciÃ³n: %dx%d | TamaÃ±o: %.2f MB | %s",
                 title, width, height, fileSize, state.getDisplayName());
     }
 }
