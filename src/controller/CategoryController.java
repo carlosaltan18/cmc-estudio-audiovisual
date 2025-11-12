@@ -11,8 +11,8 @@ public class CategoryController {
     }
 
     private void initializeDefaultCategories() {
-        categories.put("cat1", new Category("cat1", "ProgramaciÃ³n", "Contenidos sobre programaciÃ³n"));
-        categories.put("cat2", new Category("cat2", "DiseÃ±o", "Contenidos sobre diseÃ±o y UX"));
+        categories.put("cat1", new Category("cat1", "Programacion", "Contenidos sobre programacion"));
+        categories.put("cat2", new Category("cat2", "Diseño", "Contenidos sobre diseño y UX"));
         categories.put("cat3", new Category("cat3", "Web", "Contenidos sobre desarrollo web"));
     }
 
