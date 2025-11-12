@@ -39,27 +39,22 @@ nbbuild/
 .nb-gradle/
 
 # IDE - Visual Studio Code
-.vscode/
 .history/
 
 # Compiled output
 bin/
-build/
 target/
-dist/
 
 # Logs
 *.log
 logs/
 
 # OS files
-.DS_Store
 Thumbs.db
 
 # Temporary files
 *.tmp
 *.bak
-*.swp
 
 # Test coverage
 coverage/

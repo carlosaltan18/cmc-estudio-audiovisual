@@ -4,9 +4,21 @@ import java.util.stream.Collectors;
 import model.*;
 import model.enums.UserRole;
 import model.enums.ContentState;
+/**
+ * Controlador encargado de gestionar los distintos tipos de contenido del sistema:
+ * artículos, videos e imágenes.
+ * Permite crearlos, modificarlos, publicarlos y eliminarlos.
+ */
 
 public class ContentController {
+    /**
+     * Mapa que almacena todos los contenidos creados, indexados por su ID.
+     */
+
     private final Map<String, Content> contents;
+    /**
+     * Constructor que inicializa el controlador con contenido de ejemplo por defecto.
+     */
 
     public ContentController() {
         this.contents = new HashMap<>();
@@ -36,13 +48,32 @@ public class ContentController {
         contents.put(video1.getId(), video1);
         contents.put(image1.getId(), image1);
     }
-
+    /**
+     * Crea un nuevo artículo con el texto especificado.
+     * @param id identificador del artículo
+     * @param title título del artículo
+     * @param description descripción breve
+     * @param content texto del artículo
+     * @param author autor del contenido
+     * @return el artículo creado
+     */
     public Article createArticle(String id, String title, String description, String content, User author) {
         Article article = new Article(id, title, description, author);
         article.setContent(content);
         contents.put(id, article);
         return article;
     }
+    /**
+     * Crea un nuevo video con sus metadatos.
+     * @param id identificador del video
+     * @param title título del video
+     * @param description descripción breve
+     * @param videoUrl enlace al video
+     * @param duration duración en minutos
+     * @param resolution resolución del video
+     * @param author autor del contenido
+     * @return el video creado
+     */
 
     public Video createVideo(String id, String title, String description, String videoUrl,
                              int duration, String resolution, User author) {
@@ -53,6 +84,18 @@ public class ContentController {
         contents.put(id, video);
         return video;
     }
+    /**
+     * Crea una nueva imagen con sus dimensiones y URL.
+     * @param id identificador de la imagen
+     * @param title título de la imagen
+     * @param description descripción breve
+     * @param imageUrl enlace de la imagen
+     * @param width ancho en píxeles
+     * @param height altura en píxeles
+     * @param fileSize tamaño en MB
+     * @param author autor del contenido
+     * @return la imagen creada
+     */
 
     public Image createImage(String id, String title, String description, String imageUrl,
                              int width, int height, double fileSize, User author) {
@@ -62,20 +105,39 @@ public class ContentController {
         contents.put(id, image);
         return image;
     }
+    /**
+     * Obtiene un contenido específico por su identificador.
+     * @param id identificador del contenido
+     * @return el contenido correspondiente o null si no existe
+     */
 
     public Content getContentById(String id) {
         return contents.get(id);
     }
+    /**
+     * Devuelve una lista con todos los contenidos del sistema.
+     * @return lista de todos los contenidos
+     */
 
     public List<Content> getAllContents() {
         return new ArrayList<>(contents.values());
     }
+    /**
+     * Obtiene todos los contenidos que están actualmente publicados.
+     * @return lista de contenidos publicados
+     */
 
     public List<Content> getPublishedContents() {
         return contents.values().stream()
                 .filter(c -> c.getState() == ContentState.PUBLISHED)
                 .collect(Collectors.toList());
     }
+    /**
+     * Actualiza el título y la descripción de un contenido existente.
+     * @param id identificador del contenido
+     * @param title nuevo título
+     * @param description nueva descripción
+     */
 
     public void updateContent(String id, String title, String description) {
         Content content = contents.get(id);
@@ -83,10 +145,18 @@ public class ContentController {
             content.update(title, description);
         }
     }
+    /**
+     * Elimina un contenido del sistema.
+     * @param id identificador del contenido a eliminar
+     */
 
     public void deleteContent(String id) {
         contents.remove(id);
     }
+    /**
+     * Publica un contenido si está en estado de borrador.
+     * @param id identificador del contenido a publicar
+     */
 
     public void publishContent(String id) {
         Content content = contents.get(id);
@@ -94,6 +164,10 @@ public class ContentController {
             content.publish();
         }
     }
+    /**
+     * Despublica un contenido si está actualmente publicado.
+     * @param id identificador del contenido a despublicar
+     */
 
     public void unpublishContent(String id) {
         Content content = contents.get(id);
@@ -101,12 +175,22 @@ public class ContentController {
             content.unpublish();
         }
     }
+    /**
+     * Obtiene todos los contenidos que coincidan con un tipo específico.
+     * @param type clase del tipo de contenido (Article, Video, Image)
+     * @return lista de contenidos del tipo solicitado
+     */
 
     public List<Content> getContentByType(Class<?> type) {
         return contents.values().stream()
                 .filter(c -> c.getClass() == type)
                 .collect(Collectors.toList());
     }
+    /**
+     * Obtiene todos los contenidos creados por un autor determinado.
+     * @param author autor de referencia
+     * @return lista de contenidos creados por ese autor
+     */
 
     public List<Content> getContentByAuthor(User author) {
         return contents.values().stream()

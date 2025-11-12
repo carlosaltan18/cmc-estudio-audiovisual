@@ -3,13 +3,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 import model.*;
 import model.enums.*;
+/**
+ * Controlador encargado de generar reportes estadísticos y de resumen
+ * sobre los contenidos existentes en el sistema.
+ */
 
 public class ReportController {
     private final ContentController contentController;
+    /**
+     * Constructor que recibe el ContentController para acceder a los contenidos.
+     * @param contentController controlador de contenidos
+     */
 
     public ReportController(ContentController contentController) {
         this.contentController = contentController;
     }
+    /**
+     * Genera un reporte general con todos los contenidos y sus descripciones.
+     * @return objeto Report con los datos
+     */
 
     public Report generateGeneralReport() {
         Report report = new Report(UUID.randomUUID().toString(), "Reporte General");
@@ -22,6 +34,10 @@ public class ReportController {
         report.setData(data);
         return report;
     }
+    /**
+     * Genera un reporte agrupando los contenidos por tipo (Artículo, Video, Imagen).
+     * @return objeto Report con estadísticas por tipo
+     */
 
     public Report generateReportByType() {
         Report report = new Report(UUID.randomUUID().toString(), "Reporte por Tipo");
@@ -34,6 +50,10 @@ public class ReportController {
         report.setData(data);
         return report;
     }
+    /**
+     * Genera un reporte con el número de contenidos por autor.
+     * @return objeto Report con datos por autor
+     */
 
     public Report generateReportByAuthor() {
         Report report = new Report(UUID.randomUUID().toString(), "Reporte por Autor");
@@ -49,6 +69,11 @@ public class ReportController {
         report.setData(data);
         return report;
     }
+    /**
+     * Genera estadísticas generales sobre los contenidos del sistema.
+     * Incluye totales, publicados, en borrador y por tipo.
+     * @return objeto Report con las estadísticas
+     */
 
     public Report generateStatistics() {
         Report report = new Report(UUID.randomUUID().toString(), "Estadísticas");
